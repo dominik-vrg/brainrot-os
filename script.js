@@ -1,4 +1,56 @@
 document.addEventListener('DOMContentLoaded', () => {
+
+    //boot screen
+    const bootLines = [
+        "BRAINROT OS v67.420",
+        "Copyright (c) 2026 Ohio Industries",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "",
+        "Initializing SKIBIDI BIOS...",
+        "Checking RAM ....................... 67GB [ OK ]",
+        "Loading sigma.exe .................. [ OK ]",
+        "Initializing rizz drivers ........... [ OK ]",
+        "Calibrating aura levels ............. [ WARNING: LOW ]",
+        "Mounting /dev/ohio .................. [ OK ]",
+        "Starting NPC daemon ................. [ OK ]",
+        "Applying fanum tax .................. [ 3 FILES STOLEN ]",
+        "Detecting gyatt peripherals .......... [ NONE FOUND ]",
+        "Mewing protocol ..................... [ ACTIVE ]",
+        "Loading brainrot.core ............... [ OK ]",
+        "",
+        "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+        "SYSTEM READY. WELCOME BACK KING 👑",
+        "",
+        "Starting desktop environment..."
+    ]
+
+    const bootScreen = document.getElementById('boot-screen');
+    const bootTextEl = document.getElementById('boot-text');
+    const bootCursor = document.querySelector('.boot-cursor');
+
+    if (bootScreen && bootTextEl) {
+        let lineIndex = 0;
+
+        function showNextLine() {
+            if (lineIndex < bootLines.length) {
+                bootTextEl.textContent += bootLines[lineIndex] + '\n';
+                lineIndex++
+                const line = bootLines[lineIndex - 1];
+                const delay = line === '' ? 180 : Math.random() * 90 + 60;
+                setTimeout(showNextLine, delay);
+            } else {
+                if (bootCursor) bootCursor.style.display = 'none';
+                setTimeout(() => {
+                    bootScreen.style.opacity = '0';
+                    setTimeout(() => {
+                        bootScreen.style.display = 'none';
+                    }, 800);
+                }, 1000);
+            }
+        }
+
+        showNextLine();
+    }
         
     // clock function
     function UpdateClock() {

@@ -197,3 +197,39 @@ html, body {
     font-size: 15px;
     text-align: center;
 }
+
+#boot-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    z-index: 999999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px;
+    box-sizing: border-box;
+    transition: opacity 0.8s ease;
+}
+
+#boot-text {
+    font-family: 'Courier New', Courier, monospace;
+    color: #00ff41;
+    font-size: 15px;
+    line-height: 1.8;
+    margin: 0;
+}
+
+.boot-cursor {
+    font-family: 'Courier New', Courier, monospace;
+    color: #00ff41;
+    font-size: 15px;
+    animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
