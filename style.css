@@ -17,7 +17,7 @@ html, body {
 }
 
 .top-bar {
-    height: 40 px;
+    height: 40px;
     background: #00ff41;
     color: black;
     display: flex;
@@ -25,20 +25,18 @@ html, body {
     justify-content: space-between;
     padding: 0 15px;
     font-weight: bold;
-    border-bottom: 4px;
+    border-bottom: 4px solid black;
     text-transform: uppercase;
 }
 
 .desktop {
     flex-grow: 1;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 100px);
-    grid-auto-rows: 100px;
-    gap: 20px;
+    position: relative;
     padding: 20px;
 }
 
 .icon {
+    position: absolute;
     width: 80px;
     display: flex;
     flex-direction: column;
@@ -46,6 +44,8 @@ html, body {
     padding: 10px;
     cursor: pointer;
     border: 1px solid transparent;
+    user-select: none;
+    -webkit-user-select: none;
 }
 
 .icon:hover {
@@ -54,8 +54,8 @@ html, body {
 }
 
 .icon-image {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
     image-rendering: pixelated;
     pointer-events: none;
@@ -66,12 +66,25 @@ html, body {
     font-size: 12px;
     color: white;
     text-align: center;
-    word-break: break-all;
+    word-break: normal;
+}
+
+.settings {
+    font-size: large;
+    font-weight: bold;
 }
 
 .clock {
     animation: jitter 0.5s infinite;
+    font-size: large;
 }
+
+.status {
+    animation: jitter 15s infinite;
+    font-size: large;
+}
+
+
 
 @keyframes jitter {
     0% { transform: translate(0, 0); }
@@ -80,16 +93,29 @@ html, body {
 }
 
 .window {
+    display: flex;
+    flex-direction: column;
     position: absolute;
-    top: 150px;
-    left: 150px;
-    width: 300px;
+    top: 300px;
+    left: 300px;
+    height: 400px;
+    width: 600px;
     background: #1a1a1a;
     border: 2px solid #00ff41;
     box-shadow: 5px 5px 0px #00ff41;
     z-index: 9999;
-
     display: none;
+}
+
+.window-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 50px;
+    font-size: 40px;
 }
 
 .window-header {

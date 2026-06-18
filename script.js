@@ -14,6 +14,24 @@ document.addEventListener('DOMContentLoaded', () => {
     UpdateClock();
     setInterval(UpdateClock, 1000);
 
+    // date function
+    function UpdateDate() {
+        const now = new Date();
+        const dateString = now.toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+        });
+
+        const statusElement = document.querySelector('.status');
+        if (statusElement) {
+            statusElement.innerText = dateString;
+        }
+    }
+
+    UpdateDate();
+    setInterval(UpdateDate, 1000 * 60 * 60);
+
     //draggable windows
     const allWindows = document.querySelectorAll('.window');
 
@@ -77,6 +95,87 @@ document.addEventListener('DOMContentLoaded', () => {
             if (targetWindow) {
                 targetWindow.style.display = 'block';
                 targetWindow.style.zIndex = "1000";
+            }
+        });
+    });
+
+    //desktop icons grid snapping
+    const desktop = document.querySelector('.desktop');
+    const cellSize = 120;
+    const gridOffset = 0;
+
+    const occupied = new Set();
+    const cellKey = (col, row) => `${col},${row}`;
+
+    function getColumnsCount() {
+        return Math.max(1, Math.floor(desktop.clientWidth / cellSize));
+    }
+
+    function findFreeCell() {
+        const cols = getColumnsCount();
+        let row = 0;
+        while (true) {
+            for (let col = 0; col < cols; col++) {
+                if (!occupied.has(cellKey(col, row))) return {col, row};
+            }
+            row++;
+        }
+    }
+
+    function placeIcon(icon, col, row) {
+        icon.style.left = `${gridOffset + col * cellSize}px`;
+        icon.style.top = `${gridOffset + row * cellSize}px`;
+        icon.dataset.col = col;
+        icon.dataset.row = row;
+        occupied.add(cellKey(col, row));
+    }
+
+    function nearestCell(left, top) {
+        return {
+            col: Math.max(0, Math.round((left - gridOffset) / cellSize)),
+            row: Math.max(0, Math.round((top - gridOffset) / cellSize))
+        };
+    }
+
+    document.querySelectorAll('.icon').forEach(icon => {
+        const free = findFreeCell();
+        placeIcon(icon, free.col, free.row)
+    });
+
+    document.querySelectorAll('.icon').forEach(icon => {
+        let dragging = false;
+        let startX, startY, originLeft, originTop;
+
+        icon.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            dragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            originLeft = parseInt(icon.style.left, 10);
+            originTop = parseInt(icon.style.top, 10);
+            icon.style.zIndex = 10;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!dragging) return;
+            icon.style.left = `${originLeft + (e.clientX - startX)}px`
+            icon.style.top = `${originTop + (e.clientY - startY)}px`
+        });
+
+        document.addEventListener('mouseup', () => {
+            if(!dragging) return;
+            dragging = false;
+            icon.style.zIndex = '';
+
+            const target = nearestCell(parseInt(icon.style.left), parseInt(icon.style.top));
+            const targetKey = cellKey(target.col, target.row);
+            const originKey = cellKey(icon.dataset.col, icon.dataset.row);
+
+            if (targetKey !== originKey && occupied.has(targetKey)) {
+                placeIcon(icon, parseInt(icon.dataset.col), parseInt(icon.dataset.row));
+            } else {
+                occupied.delete(originKey);
+                placeIcon(icon, target.col, target.row);
             }
         });
     });
