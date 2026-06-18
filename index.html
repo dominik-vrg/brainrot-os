@@ -32,6 +32,11 @@
                 <p class="icon-label">notepad</p>
             </div>
 
+            <div class="icon", data-window="window-3">
+                <img src="images/danger.png" alt="Icon" class="icon-image">
+                <p class="icon-label">do not open</p>
+            </div>
+
             <div id = "window-1" class = "window">
 
                 <div class = "window-header">
@@ -46,12 +51,25 @@
             </div>
 
             <div id="window-2" class="window" style="top: 150px; left: 200px;">
+
                 <div class="window-header">
                     <span>NOTEPAD</span>
                     <button onclick="this.parentElement.parentElement.style.display='none'">X</button>
                 </div>
+
                 <div class="window-content" style="padding: 10px; align-items: stretch; justify-items: stretch;">
                     <textarea id="note-textarea" placeholder="type ur brainrot here..."></textarea>
+                </div>
+
+            </div>
+
+            <div id="window-3" class="window" style="top: 200px; left: 250px; width: 420px; height: 280px;">
+                <div class="window-header">
+                    <span>DO_NOT_OPEN.EXE</span>
+                    <button onclick="this.parentElement.parentElement.style.display='none'">X</button>
+                </div>
+                <div class="window-content">
+                    <button id="dont-click-btn" class="dont-click-btn">DO NOT CLICK</button>
                 </div>
             </div>
 

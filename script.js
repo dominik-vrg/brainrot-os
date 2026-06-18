@@ -180,4 +180,80 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
+    // do not open app
+    const brainrotMessages = [
+        "SKIBIDI RIZZ OVERFLOW ERROR",
+        "OHIO VIRUS DETECTED",
+        "FANUM TAX APPLIED TO YOUR FILES",
+        "SIGMA GRINDSET CORRUPTED",
+        "GYATT.EXE HAS STOPPED WORKING",
+        "WARNING: TOO MUCH RIZZ",
+        "NPC BEHAVIOR DETECTED",
+        "YOUR AURA IS NEGATIVE",
+        "MEWING PROTOCOL FAILED",
+        "CAUGHT IN 4K",
+        "NO CAP DETECTED: CAP FOUND",
+        "TOUCH GRASS IMMEDIATELY",
+        "BRAIN.ROT FILE CORRUPTED",
+        "DELULU LEVEL: MAXIMUM",
+        "IT'S GIVING ERROR",
+        "W RIZZ NOT FOUND",
+        "SUSSY BEHAVIOR ALERT",
+        "CHAT IS THIS REAL?",
+        "BASED DEPARTMENT OFFLINE",
+        "RIZZ SCORE: -999"
+    ];
+
+    const maxErrors = 15;
+    let errorCount = 0;
+    let spawnInterval = null;
+
+    function spawnErrorWindow() {
+        if (errorCount >= maxErrors) {
+            clearInterval(spawnInterval);
+            spawnInterval = null;
+            return;
+        }
+
+        const msg = brainrotMessages[Math.floor(Math.random() * brainrotMessages.length)];
+        const desktopEl = document.querySelector('.desktop');
+        const maxX = desktopEl.clientWidth - 300;
+        const maxY = desktopEl.clientHeight - 120;
+
+        const popup = document.createElement('div');
+        popup.classList.add('error-popup');
+        popup.style.left = `${Math.floor(Math.random() * maxX)}px`
+        popup.style.top = `${Math.floor(Math.random() * maxY)}px`
+
+        popup.innerHTML = `
+            <div class="error-header">
+                <span>CRITICAL ERROR</span>
+                <button class="error-close">X</button>
+            </div>
+            <div class="error-body">${msg}</div>
+        `;
+
+        popup.querySelector('.error-close').addEventListener('click', () => {
+            popup.remove();
+            errorCount--;
+        });
+
+        desktopEl.appendChild(popup);
+        errorCount++;
+    }
+
+    const dontClickBtn = document.getElementById('dont-click-btn');
+    if (dontClickBtn) {
+        dontClickBtn.addEventListener('click', () => {
+            if (spawnInterval || errorCount >= maxErrors) return;
+            spawnInterval = setInterval(() => {
+                spawnErrorWindow();
+                if (errorCount >= maxErrors) {
+                    clearInterval(spawnInterval);
+                    spawnInterval = null;
+                }
+            }, 600);
+        });
+    }
 });
