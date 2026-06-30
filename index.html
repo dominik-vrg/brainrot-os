@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang = "en">
 <head>
     <meta charset="UTF-8">
@@ -24,8 +23,10 @@
                 <button class="settings-button" id="settings-trigger" aria-label="Open Settings">⚙️ Settings</button>
             </div>
 
-            <div class = top-bar-center>
-                <button class="spotlight-trigger" id="spotlight-trigger" aria-label="Search Apps">🔍 Search</button>
+            <div class = "top-bar-center">
+                <button class="spotlight-trigger" id="spotlight-trigger" aria-label="Search Apps">
+                    🔍 Search <span class="kbd-hint">⊞ K</span>
+                </button>
             </div>
 
             <div class="top-bar-right">
@@ -37,7 +38,7 @@
             </div>
         </nav>
             
-        <main class="desktop">
+        <main class="desktop" id="desktop">
 
             <div class="icon" data-window="window-1" tabindex="0">
                 <div class="icon-image icon-emoji">🧠</div>
@@ -151,11 +152,139 @@
 
             <!-- window 5 -->
             <div id="window-5", class="window settings-window" style="top: 90px; left: 340px; width: 480px; height: 440px;">
-            <!-- to be continued -->
+                <div class="window-header">
+                    <span>SETTINGS</span>
+                    <div class="traffic-lights">
+                        <button class="traffic-light minimize" aria-label="minimize"></button>
+                        <button class="traffic-light maximize" aria-label="maximize"></button>
+                        <button class="traffic-light close" aria-label="close"></button>
+                    </div>
+                </div>
+                <div class="window-content settings-content" style="padding: 0; align-items: stretch; justify-content: flex-start;">
+                    <div class="settings-tabs">
+                        <button class="settings-tab active" data-tab="appearance">Appearance</button>
+                        <button class="settings-tab" data-tab="sound">Sound</button>
+                        <button class="settings-tab" data-tab="system">System</button>
+                        <button class="settings-tab" data-tab="about">About</button>
+                    </div>
+
+                    <div class="settings-panel active" id="panel-appearance">
+                        <div class="settings-row">
+                            <label>Accent Color</label>
+                            <div class="swatch-group">
+                                <button class="swatch" data-accent="green" style="background: #00ff41" aria-label="Green accent"></button>
+                                <button class="swatch" data-accent="pink" style="background: #ff2bd6" aria-label="Pink accent"></button>
+                                <button class="swatch" data-accent="blue" style="background: #00d4ff" aria-label="Blue accent"></button>
+                                <button class="swatch" data-accent="orange" style="background: #ffaa00" aria-label="Orange accent"></button>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <label>Wallpaper</label>
+                            <div class="swatch-group">
+                                <button class="wallpaper-swatch" data-wallpaper="default" style="background:radial-gradient(circle, #5500ff, #000000)" aria-label="Default wallpaper"></button>
+                                <button class="wallpaper-swatch" data-wallpaper="sunset" style="background:radial-gradient(circle, #ff5500, #1a0000)" aria-label="Sunset wallpaper"></button>
+                                <button class="wallpaper-swatch" data-wallpaper="matrix" style="background:radial-gradient(circle, #003300, #000000)" aria-label="Matrix wallpaper"></button>
+                                <button class="wallpaper-swatch" data-wallpaper="deepsea" style="background:radial-gradient(circle, #0044ff, #000010)" aria-label="Deep sea wallpaper"></button>
+                            </div>
+                        </div>
+                        <div class="settings-row">
+                            <label for="motion-toggle">Reduce Motion</label>
+                            <input type="checkbox" id="motion-toggle" class="toggle-switch">
+                        </div>
+                    </div>
+
+                    <div class="settings-panel" id="panel-sound">
+                        <div class="settings-row">
+                            <label for="sound-toggle">UI Sound Effects</label>
+                            <input type="checkbox" id="sound-toggle" class="toggle-switch">
+                        </div>
+                        <p class="settings-hint">Beeps and boops play when you open windows, click dock icons, and use the calculator. Browsers require a click before audio can play.</p>
+                    </div>
+
+                    <div class="settings-panel" id="panel-system">
+                        <div class="settings-row">
+                            <label for="boot-toggle">Show Boot Screen on Load</label>
+                            <input type="checkbox" id="boot-toggle" class="toggle-switch">
+                        </div>
+                        <div class="settings-row">
+                            <button class="settings-action-btn" id="reset-icons-btn">Reset Desktop Icons</button>
+                        </div>
+                        <div class="settings-row">
+                            <button class="settings-action-btn danger" id="reset-settings-btn">Reset All Settings</button>
+                        </div>
+                    </div>
+
+                    <div class="settings-panel" id="panel-about">
+                        <pre class="about-ascii">
+  _               _                 _               
+ | |             (_)               | |              
+ | |__  _ __ __ _ _ _ __  _ __ ___ | |_    ___  ___ 
+ | '_ \| '__/ _` | | '_ \| '__/ _ \| __|  / _ \/ __|
+ | |_) | | | (_| | | | | | | | (_) | |_  | (_) \__ \
+ |_.__/|_|  \__,_|_|_| |_|_|  \___/ \__|  \___/|___/                         
+        </pre>
+                        <p>BRAINROT OS v67.420</p>
+                        <p>(c) 2026 Ohio Industries</p>
+                        <p id="uptime-display">BRAINROT UPTIME: 0m 0s</p>
+                    </div>
+                </div>
             </div>
+
+            <!-- context menu -->
+             <div id="context-menu" class="hidden">
+                <button class="context-item" id="ctx-wallpaper">🖼 Change Wallpaper</button>
+                <button class="context-item" id="ctx-sound">🔊 Toggle Sound</button>
+                <div class="context-divider"></div>
+                <button class="context-item" id="ctx-spotlight">🔍 Open Spotlight</button>
+                <button class="context-item" id="ctx-about">ℹ️ About Brainrot OS</button>
+                <div class="context-divider"></div>
+                <button class="context-item" id="ctx-refresh">🔄️ Refresh Desktop</button>
+             </div>
+
         </main>
 
+        <!-- dock -->
+         <div class="dock" id="dock">
+            <div class="dock-icon" data-window="window-1" tabindex="0">
+                <span class="dock-tooltip">brainrot.exe</span>
+                <span class="dock-emoji">🧠</span>
+                <span class="dock-running-dot"></span>
+            </div>
+            <div class="dock-icon" data-window="window-2" tabindex="0">
+                <span class="dock-tooltip">notepad</span>
+                <span class="dock-emoji">📝</span>
+                <span class="dock-running-dot"></span>
+            </div>
+            <div class="dock-icon" data-window="window-3" tabindex="0">
+                <span class="dock-tooltip">do not open</span>
+                <span class="dock-emoji">🛑</span>
+                <span class="dock-running-dot"></span>
+            </div>
+            <div class="dock-icon" data-window="window-4" tabindex="0">
+                <span class="dock-tooltip">calculator</span>
+                <span class="dock-emoji">🧮</span>
+                <span class="dock-running-dot"></span>
+            </div>
+            <div class="dock-icon" data-window="window-5" tabindex="0">
+                <span class="dock-tooltip">settings</span>
+                <span class="dock-emoji">⚙️</span>
+                <span class="dock-running-dot"></span>
+            </div>
+         </div>
+
     </div>
+
+    <!-- spotlight search -->
+    <div id="spotlight-overlay" class="hidden">
+        <div class="spotlight-box">
+            <div class="spotlight-input-wrap">
+                <span>🔍</span>
+                <input type="text" id="spotlight-input" placeholder="what brainrot do you seek..." autocomplete="off">
+            </div>
+            <div class="spotlight-results" id="spotlight-results"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
